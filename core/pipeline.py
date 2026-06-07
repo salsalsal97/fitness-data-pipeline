@@ -1,6 +1,6 @@
 ### IMPORTS ###
 from ingestion.myfitnesspal import extract_mfp_page, build_mfp_record, parse_mfp_totals, parse_note_metrics, parse_exercises, transform_exercises, record_to_row #get_mfp_totals
-from db.google_sheets import get_worksheet
+from db.google_sheets import get_worksheet, date_exists, find_rows_by_date, delete_rows
 from core.config import MFP, GOOGLE_SPREADSHEET, WORKSHEETS, MFP_SCHEMA, PROGRESS_SCHEMA, WRITE_TO_SHEETS
 
 ### MAIN ###
@@ -34,15 +34,23 @@ def run_daily_pipeline(target_date):
         GOOGLE_SPREADSHEET,
         WORKSHEETS["nutrition"]
     )
-    if WRITE_TO_SHEETS:
+    nutrition_exists = date_exists(nutrition_sheet,target_date)
+    if nutrition_exists:
+        print(f"Nutrition record already exists for {target_date}; skipping append.")
+    if WRITE_TO_SHEETS and not nutrition_exists:
         nutrition_sheet.append_row(record_to_row(daily_record, MFP_SCHEMA))
     print(f"Processed {target_date}: {daily_record}")
     progress_sheet = get_worksheet(
         GOOGLE_SPREADSHEET,
         WORKSHEETS["progress"]
     )
+    rows_to_delete = find_rows_by_date(progress_sheet, target_date)
+    if rows_to_delete:
+        print(f"Deleting {len(rows_to_delete)} existing progress rows for {target_date}")
+    if WRITE_TO_SHEETS:
+        delete_rows(progress_sheet, rows_to_delete)
     for record in progress_records:
         validate_record(record, PROGRESS_SCHEMA)
         if WRITE_TO_SHEETS:
             progress_sheet.append_row(record_to_row(record, PROGRESS_SCHEMA))
-    print(f"Processed {len(progress_records)} progress records: {progress_records}")
+    print(f"Generated {len(progress_records)} progress records: {progress_records}")
