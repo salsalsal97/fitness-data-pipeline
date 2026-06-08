@@ -25,9 +25,8 @@ jobs:
       - name: Create secrets files
         run: |
           mkdir -p secrets
-          echo "${{ secrets.GOOGLE_CREDENTIALS_JSON }}" > secrets/credentials.json
-          echo "${{ secrets.MFP_COOKIES_TXT }}" > secrets/cookies.txt
-
+          printf '%s' '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > secrets/credentials.json
+          printf '%s' '${{ secrets.MFP_COOKIES_TXT }}' > secrets/cookies.txt
       - name: Run pipeline
         run: |
           python -m scripts.run_mfp_daily
