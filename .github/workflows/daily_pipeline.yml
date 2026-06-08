@@ -30,4 +30,4 @@ jobs:
 
       - name: Run pipeline
         run: |
-          python scripts/run_mfp_daily.py
+          python -m scripts.run_mfp_daily
