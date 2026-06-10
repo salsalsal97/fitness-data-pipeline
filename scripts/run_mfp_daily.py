@@ -6,9 +6,7 @@
 ### IMPORTS ###
 from datetime import date, timedelta
 from core.pipeline import run_daily_pipeline
-target_date = date.today() - timedelta(days=2)
-#target_date = date.today() - timedelta(days=1)
-#target_date = date(2026,5,10)
+target_date = date.today() - timedelta(days=1)
 
 ### MAIN ###
 def main():

@@ -38,7 +38,7 @@ def run_daily_pipeline(target_date):
     if nutrition_exists:
         print(f"Nutrition record already exists for {target_date}; skipping append.")
     if WRITE_TO_SHEETS and not nutrition_exists:
-        nutrition_sheet.append_row(record_to_row(daily_record, MFP_SCHEMA))
+        nutrition_sheet.append_row(record_to_row(daily_record, MFP_SCHEMA), value_input_option="USER_ENTERED")
     print(f"Processed {target_date}: {daily_record}")
     progress_sheet = get_worksheet(
         GOOGLE_SPREADSHEET,
@@ -52,5 +52,5 @@ def run_daily_pipeline(target_date):
     for record in progress_records:
         validate_record(record, PROGRESS_SCHEMA)
         if WRITE_TO_SHEETS:
-            progress_sheet.append_row(record_to_row(record, PROGRESS_SCHEMA))
+            progress_sheet.append_row(record_to_row(record, PROGRESS_SCHEMA), value_input_option="USER_ENTERED")
     print(f"Generated {len(progress_records)} progress records: {progress_records}")
