@@ -4,9 +4,19 @@ A personal ETL (Extract, Transform, Load) project that automates the collection,
 
 ## Overview
 
-This project was built to automate the manual tracking of fitness and nutrition data. The pipeline extracts information from MyFitnessPal, transforms it into a structured format, validates the resulting records, and loads them into Google Sheets where the data can be visualised and analysed.
+This project was built to automate the manual tracking of my fitness and nutrition data. The pipeline extracts information from MyFitnessPal, transforms it into a structured format, validates the resulting records, and loads them into Google Sheets where the data can be visualised and analysed.
 
 The project follows a modular ETL architecture with separate layers for extraction, transformation, validation, and persistence.
+
+## Outputs (Fitness Dashboard)
+
+### Nutrition Page
+
+![Fitness Dashboard - Nutrition](images/dashboard_nutrition_page.png)
+
+### Fitness Page
+
+![Fitness Dashboard - Fitness](images/dashboard_fitness_page.png)
 
 ## Features
 
@@ -103,6 +113,12 @@ Fitness/
 │
 ├── tests/
 │
+│
+├── images/
+│   └── dashboard_nutrition_page.png
+│   └── dashboard_fitness_page.png
+│
+│
 ├── requirements_windows.txt
 ├── .gitignore
 └── README.md
@@ -113,6 +129,7 @@ Fitness/
 * Python
 * Requests
 * BeautifulSoup4
+* Pandas
 * Google Sheets API
 * gspread
 * OAuth2 Service Accounts
@@ -159,8 +176,8 @@ The following files are intentionally excluded from version control:
 
 ## Current Limitations
 
-* Relies on MyFitnessPal web scraping rather than an official API
-* Requires valid MyFitnessPal authentication cookies
+* Relies on MyFitnessPal web scraping rather than an official API (due to lack of availability)
+* Requires valid MyFitnessPal authentication cookies (must be regenerated from time to time)
 * Custom metrics (steps, weight, waist) are currently supplied through structured diary notes
 * Exercise mappings must be maintained manually for new exercise types
 
