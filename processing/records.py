@@ -4,6 +4,6 @@ def build_base_record(target_date):
     """
     out = {
         "date": target_date.isoformat(),
-        "day": target_date.strftime("%A"),
+        "day": target_date.strftime("%a"),
     }
     return out
