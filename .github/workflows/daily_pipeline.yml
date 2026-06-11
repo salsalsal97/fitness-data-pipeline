@@ -2,7 +2,7 @@ name: Daily Fitness Pipeline
 
 on:
   schedule:
-    - cron: "0 21 * * *" # Runs 9 PM UTC
+    - cron: "31 18 * * *" # Runs 19:31 UK time (18:31 in winter)
   workflow_dispatch:
 
 jobs:
