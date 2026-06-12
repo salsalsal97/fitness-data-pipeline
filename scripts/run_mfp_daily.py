@@ -1,6 +1,6 @@
 ############################################# MYFITNESSPAL AUTOMATION #############################################
-# FIRST ACTIVATE venv_windows ENVIRONMENT IN 'C:\Users\salma\Desktop\Fitness' (.\venv_windows\Scripts\activate)
-# SOMETIMES MAY NEED TO REGENERATE 'C:\Users\salma\Desktop\Fitness\secrets\cookies.txt' (IF AUTHENTICATION ERROR)
+# FIRST ACTIVATE ENVIRONMENT WITH PACKAGES AS IN requirements.txt
+# SOMETIMES MAY NEED TO REGENERATE '.\secrets\cookies.txt' (IF AUTHENTICATION ERROR)
 ###################################################################################################################
 
 ### IMPORTS ###
@@ -15,7 +15,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-### TO RUN FOR A RANGE ###
+### TO RUN FOR A RANGE OF DATES ###
 #import pandas as pd
 #dates = pd.date_range(start='2026-04-22',end='2026-06-03')
 #for dt in dates:
