@@ -1,4 +1,4 @@
-WRITE_TO_SHEETS = False
+WRITE_TO_SHEETS = True
 
 GOOGLE_SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
