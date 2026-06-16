@@ -54,3 +54,9 @@ def run_daily_pipeline(target_date):
         if WRITE_TO_SHEETS:
             progress_sheet.append_row(record_to_row(record, PROGRESS_SCHEMA), value_input_option="USER_ENTERED")
     print(f"Generated {len(progress_records)} progress records: {progress_records}")
+    return {
+        "date": daily_record["date"],
+        "daily_record": daily_record,
+        "progress_count": len(progress_records),
+        "progress_records": progress_records,
+    }

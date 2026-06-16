@@ -1,4 +1,4 @@
-WRITE_TO_SHEETS = True
+WRITE_TO_SHEETS = False
 
 GOOGLE_SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -37,14 +37,7 @@ PROGRESS_SCHEMA = [
     "notes"
 ]
 
-# MFP_COLUMNS = {
-#     "date": "Date",
-#     "day": "Day",
-#     "calories": "Calories (kCal)",
-#     "protein": "Protein (g)",
-#     "carbohydrates": "Carbs (g)",
-#     "fat": "Fats (g)",
-#     "steps": "Steps",
-#     "weight": "Weight (kg)",   
-#     "waist": "Waist (cm)"
-# }
+EMAIL = {
+    "from": "Fitness Pipeline <onboarding@resend.dev>",
+    "to": "salman.fawad@hotmail.com"
+}

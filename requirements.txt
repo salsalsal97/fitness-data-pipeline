@@ -2,3 +2,4 @@ beautifulsoup4==4.14.3
 google-auth==2.49.2
 gspread==6.2.1
 requests==2.33.1
+resend

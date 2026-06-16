@@ -6,11 +6,27 @@
 ### IMPORTS ###
 from datetime import date, timedelta
 from core.pipeline import run_daily_pipeline
+from notifications.email import send_status_email, format_success, format_failure
 target_date = date.today() - timedelta(days=1)
 
 ### MAIN ###
 def main():
-    run_daily_pipeline(target_date)
+    try:
+        summary = run_daily_pipeline(target_date)
+        send_status_email(
+            subject=(
+                f"Fitness pipeline succeeded with warning - {target_date}"
+                if summary["daily_record"]["steps"] is None
+                else f"Fitness pipeline succeeded - {target_date}"
+            ),
+            body=format_success(summary),
+        )
+    except Exception as e:
+        send_status_email(
+            subject=f"Fitness pipeline failed - {target_date}",
+            body=format_failure(target_date,e),
+        )
+        raise
 
 if __name__ == "__main__":
     main()

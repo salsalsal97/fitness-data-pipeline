@@ -28,5 +28,7 @@ jobs:
           printf '%s' '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > secrets/credentials.json
           printf '%s' '${{ secrets.MFP_COOKIES_TXT }}' > secrets/cookies.txt
       - name: Run pipeline
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           python -m scripts.run_mfp_daily

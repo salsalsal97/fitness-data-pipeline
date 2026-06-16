@@ -89,7 +89,7 @@ def parse_note_metrics(html):
     #if not match_steps:
     #    raise ValueError("Steps not found in note")
     #else:
-    steps = int(match_steps.group(1))
+    steps = int(match_steps.group(1)) if match_steps else None
     if not match_weight:
         weight = None
     else:
