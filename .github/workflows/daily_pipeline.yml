@@ -22,13 +22,10 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Create secrets files
-        run: |
-          mkdir -p secrets
-          printf '%s' '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > secrets/credentials.json
-          printf '%s' '${{ secrets.MFP_COOKIES_TXT }}' > secrets/cookies.txt
       - name: Run pipeline
         env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          MFP_COOKIES_TXT: ${{ secrets.MFP_COOKIES_TXT }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           python -m scripts.run_mfp_daily

@@ -1,18 +1,33 @@
 ### IMPORTS ###
+import gspread
+import os
+import json
+from google.oauth2.service_account import Credentials
 from core.paths import GOOGLE_CREDENTIALS_FILE
 from core.config import GOOGLE_SCOPES
-from google.oauth2.service_account import Credentials
-import gspread
 
 ### MAIN ###
-def get_gspread_client():
+def get_google_credentials():
     """
     Connects to GCP
     """
-    creds = Credentials.from_service_account_file(
+    credentials_json = os.getenv("GOOGLE_CREDENTIALS_JSON")
+    if credentials_json:
+        info = json.loads(credentials_json)
+        return Credentials.from_service_account_info(
+            info,
+            scopes=GOOGLE_SCOPES
+        )
+    return Credentials.from_service_account_file(
         str(GOOGLE_CREDENTIALS_FILE),
         scopes=GOOGLE_SCOPES
     )
+
+def get_gspread_client():
+    """
+    Builds connection
+    """
+    creds = get_google_credentials()
     return gspread.authorize(creds)
 
 def get_worksheet(spreadsheet_name: str, worksheet_name: str):

@@ -1,4 +1,6 @@
 ### IMPORTS ###
+import os
+import tempfile
 import requests
 import http.cookiejar as cj
 import re
@@ -18,12 +20,31 @@ def parse_numeric_value(text):
     numbers = re.findall(r"\d+", text.replace(",", ""))
     return int(numbers[0]) if numbers else None
 
+def load_cookiejar():
+    """
+    Loads cookies
+    """
+    cookies_txt = os.getenv("MFP_COOKIES_TXT")
+    jar = cj.MozillaCookieJar()
+    if cookies_txt:
+        with tempfile.NamedTemporaryFile(
+            mode="w+",
+            delete=False,
+            encoding="utf-8"
+        ) as f:
+            f.write(cookies_txt)
+            temp_path = f.name
+        jar.load(temp_path, ignore_discard=True, ignore_expires=True)
+        return jar
+    jar = cj.MozillaCookieJar(str(COOKIES_FILE))
+    jar.load(ignore_discard=True, ignore_expires=True)
+    return jar
+
 def load_session():
     """
     Load MFP session
     """
-    jar = cj.MozillaCookieJar(str(COOKIES_FILE))
-    jar.load(ignore_discard=True, ignore_expires=True)
+    jar = load_cookiejar()
     session = requests.Session()
     for cookie in jar:
         session.cookies.set(cookie.name, cookie.value)
