@@ -88,43 +88,20 @@ def parse_mfp_totals(html):
 
 def parse_note_metrics(html):
     """
-    Function to get steps, weight, waist
+    Extract steps, weight and waist from MFP Exercise Notes.
     """
     soup = BeautifulSoup(html, "html.parser")
-    note = None
-    for p in soup.find_all("p"):
-        if "#steps=" in p.get_text().lower():
-            note = p
-            break
-    if not note:
-        return {
-            "steps": None,
-            "weight": None,
-            "waist": None
-        }
-        #raise ValueError("Note not found - MFP structure may have changed")
-    text = note.get_text("\n", strip=True)
-    match_steps = re.search(rf"steps=([\d\.]+)", text)
-    match_weight = re.search(rf"weight=([\d\.]+)", text)
-    match_waist = re.search(rf"waist=([\d\.]+)", text)
-    #if not match_steps:
-    #    raise ValueError("Steps not found in note")
-    #else:
-    steps = int(match_steps.group(1)) if match_steps else None
-    if not match_weight:
-        weight = None
-    else:
-        weight = float(match_weight.group(1))
-    if not match_waist:
-        waist = None
-    else:
-        waist = float(match_waist.group(1))
-    output = {
-        "steps": steps,
-        "weight": weight,
-        "waist": waist
+    text = soup.get_text(" ", strip=True)
+
+    match_steps = re.search(r"#steps\s*=\s*(\d+)", text, re.IGNORECASE)
+    match_weight = re.search(r"#weight\s*=\s*(\d+(?:\.\d+)?)", text, re.IGNORECASE)
+    match_waist = re.search(r"#waist\s*=\s*(\d+(?:\.\d+)?)", text, re.IGNORECASE)
+
+    return {
+        "steps": int(match_steps.group(1)) if match_steps else None,
+        "weight": float(match_weight.group(1)) if match_weight else None,
+        "waist": float(match_waist.group(1)) if match_waist else None,
     }
-    return output
 
 def parse_exercises(html):
     """

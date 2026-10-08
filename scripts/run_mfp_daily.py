@@ -4,10 +4,13 @@
 ###################################################################################################################
 
 ### IMPORTS ###
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 from core.pipeline import run_daily_pipeline
 from notifications.email import send_status_email, format_success, format_failure
-target_date = date.today() - timedelta(days=1)
+from zoneinfo import ZoneInfo
+now = datetime.now(ZoneInfo("Europe/London"))
+days_back = 2 if now.hour < 6 else 1
+target_date = now.date() - timedelta(days=days_back)
 
 ### MAIN ###
 def main():
